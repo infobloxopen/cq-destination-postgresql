@@ -1,4 +1,4 @@
-module github.com/cloudquery/cloudquery/plugins/destination/postgresql
+module github.com/infobloxopen/cq-plugin-dest-postgres
 
 go 1.20
 
