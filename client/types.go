@@ -2,7 +2,7 @@ package client
 
 import (
 	"github.com/apache/arrow/go/v14/arrow"
-	"github.com/cloudquery/cloudquery/plugins/destination/postgresql/pgarrow"
+	"github.com/infobloxopen/cq-plugin-dest-postgres/pgarrow"
 )
 
 func (c *Client) SchemaTypeToPg(t arrow.DataType) string {

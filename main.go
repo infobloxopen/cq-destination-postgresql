@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/cloudquery/cloudquery/plugins/destination/postgresql/client"
-	"github.com/cloudquery/cloudquery/plugins/destination/postgresql/resources/plugin"
+	"github.com/infobloxopen/cq-plugin-dest-postgres/client"
+	"github.com/infobloxopen/cq-plugin-dest-postgres/resources/plugin"
 	pluginSDK "github.com/cloudquery/plugin-sdk/v4/plugin"
 	"github.com/cloudquery/plugin-sdk/v4/serve"
 )
