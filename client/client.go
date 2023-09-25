@@ -24,6 +24,7 @@ type Client struct {
 	pgType              pgType
 	batchSize           int
 	writer              *mixedbatchwriter.MixedBatchWriter
+	customCQIDSalt      string
 
 	pgTablesToPKConstraints map[string]string
 
@@ -101,6 +102,7 @@ func New(ctx context.Context, logger zerolog.Logger, specBytes []byte, opts plug
 	if err != nil {
 		return nil, err
 	}
+	c.customCQIDSalt = spec.CustomCQIDSalt
 	return c, nil
 }
 

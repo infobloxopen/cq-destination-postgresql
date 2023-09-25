@@ -1,0 +1,23 @@
+kind: source
+spec:
+  name: ${SOURCE_NAME}
+  registry: "local"
+  path: "./cq-source-test/cq-source-test"
+  deterministic_cq_id: true
+  destinations: ["postgresql"]
+  tables: [ "test_data"]
+  spec:
+
+---
+kind: destination
+spec:
+  name: "postgresql"
+  registry: "local"
+  path: "./cq-plugin-dest-postgres"
+  write_mode: "overwrite-delete-stale"
+  migrate_mode: "forced"
+  pk_mode: "cq-id-only"
+
+  spec:
+    connection_string: "postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+    custom_cqid_salt: ${CUSTOM_CQID_SALT}
