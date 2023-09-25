@@ -1,0 +1,25 @@
+name: PR
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: "Integration Test"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+          cache: true
+      - name: Install dependencies
+        run: go get .
+      - uses: cloudquery/setup-cloudquery@v3
+        name: Setup CloudQuery
+        with:
+          version: "v3.19.0"
+      - name: Integration Test
+        run: make test
+
