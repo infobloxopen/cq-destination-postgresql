@@ -201,9 +201,9 @@ func getCustomHashableIndices(columns schema.ColumnList) []int {
 	return indices
 }
 
-func regenerateHash(val [16]byte, prefix string) [16]byte {
+func regenerateHash(val [16]byte, salt string) [16]byte {
 	h := sha256.New()
 	h.Write(val[:])
-	h.Write([]byte(prefix))
+	h.Write([]byte(salt))
 	return [16]byte(uuid.NewSHA1(uuid.UUID{}, h.Sum(nil)))
 }
