@@ -18,6 +18,7 @@ type Spec struct {
 	BatchSize        int                 `json:"batch_size,omitempty"`
 	BatchSizeBytes   int                 `json:"batch_size_bytes,omitempty"`
 	BatchTimeout     configtype.Duration `json:"batch_timeout,omitempty"`
+	CustomCQIDSalt   string              `json:"custom_cqid_salt,omitempty"`
 }
 
 func (s *Spec) SetDefaults() {

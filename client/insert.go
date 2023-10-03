@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"strconv"
@@ -9,8 +10,10 @@ import (
 
 	"github.com/cloudquery/plugin-sdk/v4/message"
 	"github.com/cloudquery/plugin-sdk/v4/schema"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 // InsertBatch inserts records into the destination table. It forms part of the writer.MixedBatchWriter interface.
@@ -53,7 +56,18 @@ func (c *Client) InsertBatch(ctx context.Context, messages message.WriteInserts)
 			sql = c.insert(table)
 		}
 		rows := transformValues(r)
+
+		customIndices := getCustomHashableIndices(table.Columns)
 		for _, rowVals := range rows {
+			if c.customCQIDSalt != "" {
+				for _, idx := range customIndices {
+					if eUUID, ok := rowVals[idx].(pgtype.UUID); ok {
+						eUUID.Bytes = regenerateHash(eUUID.Bytes, c.customCQIDSalt)
+						rowVals[idx] = eUUID
+					}
+				}
+			}
+
 			batch.Queue(sql, rowVals...)
 		}
 		batchSize := batch.Len()
@@ -175,4 +189,21 @@ func pgErrToStr(err *pgconn.PgError) string {
 	sb.WriteString(", routine: ")
 	sb.WriteString(err.Routine)
 	return sb.String()
+}
+
+func getCustomHashableIndices(columns schema.ColumnList) []int {
+	var indices []int
+	for i := range columns {
+		if columns[i].Name == "_cq_id" || columns[i].Name == "_cq_parent_id" {
+			indices = append(indices, i)
+		}
+	}
+	return indices
+}
+
+func regenerateHash(val [16]byte, salt string) [16]byte {
+	h := sha256.New()
+	h.Write(val[:])
+	h.Write([]byte(salt))
+	return [16]byte(uuid.NewSHA1(uuid.UUID{}, h.Sum(nil)))
 }
