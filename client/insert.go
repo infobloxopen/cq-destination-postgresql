@@ -57,12 +57,14 @@ func (c *Client) InsertBatch(ctx context.Context, messages message.WriteInserts)
 		}
 		rows := transformValues(r)
 
-		indices := getCustomHashableIndices(table.Columns)
+		customIndices := getCustomHashableIndices(table.Columns)
 		for _, rowVals := range rows {
-			for _, idx := range indices {
-				if eUUID, ok := rowVals[idx].(pgtype.UUID); ok {
-					eUUID.Bytes = regenerateHash(eUUID.Bytes, c.customCQIDSalt)
-					rowVals[idx] = eUUID
+			if c.customCQIDSalt != "" {
+				for _, idx := range customIndices {
+					if eUUID, ok := rowVals[idx].(pgtype.UUID); ok {
+						eUUID.Bytes = regenerateHash(eUUID.Bytes, c.customCQIDSalt)
+						rowVals[idx] = eUUID
+					}
 				}
 			}
 
