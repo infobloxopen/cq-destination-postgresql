@@ -10,8 +10,8 @@ import (
 	"github.com/cloudquery/plugin-sdk/v4/scheduler"
 	"github.com/cloudquery/plugin-sdk/v4/schema"
 	"github.com/cloudquery/plugin-sdk/v4/transformers"
-	"github.com/infobloxopen/cq-plugin-dest-postgres/cq-source-test/client"
-	"github.com/infobloxopen/cq-plugin-dest-postgres/cq-source-test/resources/services"
+	"github.com/infobloxopen/cq-destination-postgresql/cq-source-test/client"
+	"github.com/infobloxopen/cq-destination-postgresql/cq-source-test/resources/services"
 	"github.com/rs/zerolog"
 )
 

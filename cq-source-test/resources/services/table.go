@@ -5,7 +5,7 @@ import (
 
 	"github.com/cloudquery/plugin-sdk/v4/schema"
 	"github.com/cloudquery/plugin-sdk/v4/transformers"
-	"github.com/infobloxopen/cq-plugin-dest-postgres/cq-source-test/data"
+	"github.com/infobloxopen/cq-destination-postgresql/cq-source-test/data"
 )
 
 func SampleTable() *schema.Table {

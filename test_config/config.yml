@@ -13,7 +13,7 @@ kind: destination
 spec:
   name: "postgresql"
   registry: "local"
-  path: "./cq-plugin-dest-postgres"
+  path: "./cq-destination-postgresql"
   write_mode: "overwrite-delete-stale"
   migrate_mode: "forced"
   pk_mode: "cq-id-only"

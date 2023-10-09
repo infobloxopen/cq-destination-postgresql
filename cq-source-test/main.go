@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/infobloxopen/cq-plugin-dest-postgres/cq-source-test/resources/plugin"
+	"github.com/infobloxopen/cq-destination-postgresql/cq-source-test/resources/plugin"
 
 	"github.com/cloudquery/plugin-sdk/v4/serve"
 )
