@@ -1,4 +1,4 @@
-module github.com/infobloxopen/cq-plugin-dest-postgres
+module github.com/infobloxopen/cq-destination-postgresql
 
 go 1.20
 
